@@ -6,14 +6,11 @@
 
     <title>Sushi Search SF</title>
     <!-- STYLESHEETS -->
-    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
-
     <!-- VENDOR SCRIPTS -->
-    <script src="vendor/jQuery/dist/jquery.min.js"></script>
-    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="vendor/handlebars/handlebars.min.js"></script>
-
+    <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <!-- APPLICATION SCRIPTS -->
     <script src="scripts/app.js"></script>
   </head>
@@ -45,24 +42,31 @@
               <fieldset>
         <div class="form-group">
           <label class="col-md-8 control-label" for="name">Restaurant Name</label>
-          <div class="col-md-4">
-          <input id="name" name="name" type="text" placeholder="" class="form-control input-md" required="">
+          <div class="col-md-8">
+          <input name="name" type="text" placeholder="" class="form-control input-md" id='restaurantname' required="">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-md-8 control-label" for="artistName">Restaurant Location</label>
-          <div class="col-md-4">
-          <input id="textinput" name="location" type="text" placeholder="" class="form-control input-md">
+          <label class="col-md-8 control-label" for="location">Restaurant Location</label>
+          <div class="col-md-8">
+          <input name="location" type="text" placeholder="" id='location' class="form-control input-md">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-md-8 control-label" for="releaseDate">Comments</label>
-          <div class="col-md-4">
-          <input id="releaseDate" name="comments" type="text" placeholder="" class="form-control input-md">
+          <label class="col-md-8 control-label" for="comments">Comments</label>
+          <div class="col-md-8">
+          <input name="comments" type="text" placeholder="" id ='comments' class="form-control input-md">
+          <br>
+          <div class="form-group">
+            <label class="col-md- control-label" for="location">Rating(Scale from 1-10)</label>
+            <div class="col-md-12">
+            <input name="rating" type="text" placeholder="" id='rating' class="form-control input-md">
+            </div>
+          </div>
         </div>
         </div>
-          <label class="col-md-8 control-label" for="singlebutton">Save Restaurant</label>
-          <div class="col-md-4">
+          <label class="control-label" for="singlebutton">Save Restaurant</label>
+          <div class="col-md-0">
             <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
           </div>
         </div>
@@ -71,41 +75,6 @@
   </div>
   </div>
 </section>
-<section id='restaurant-form' class="container col-md-6">
-  <!-- <div class='col-md-6'>Hello</div> -->
-  <div class="row album" data-album-id="{{_id}}">
-            <div class="col-md-6 col-xs-12">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <h4 class='inline-header'>Restaurant Name:</h4>
-                  <span class='restaurant-name'>{{name}}</span>
-                </li>
-                <li class="list-group-item">
-                  <h4 class='inline-header'>Location:</h4>
-                  <span class='location'>{{location}}</span>
-                </li>
-                <li class="list-group-item">
-                  <h4 class='inline-header'>Rating:</h4>
-                  <span class='rating'>{{rating}}</span>
-                </li>
-                <li class="list-group-item">
-                  <h4 class="inline-header">Comments:</h4>
-                  <span class='comments'>&ndash; {{#each comment}} ({{date}}) {{body}} &ndash;  {{/each}}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- end of album internal row -->
-          <div class='panel-footer'>
-            <button class="btn btn-danger delete-album">Delete Restaurant</button>
-            <button class='btn btn-info edit-album'>Edit Restaurant</button>`
-            <button class='btn btn-primary add-song'>Add Comment</button>
-            <button class="btn btn-secondary edit-song">Edit Comment</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 <div id='restaurants'>
   <script id='restaurant-template' type='text/x-handlebars-template'>
     <div class="row album" data-album-id="{{_id}}">
@@ -113,8 +82,6 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class='row'>
-              <div class="col-md-3 col-xs-12 thumbnail album-art">
-                <img src="images/800x800.png" alt="album image">
               </div>
               <div class="col-md-9 col-xs-12">
                 <ul class="list-group">
@@ -124,7 +91,7 @@
                   </li>
                   <li class="list-group-item">
                     <h4 class='inline-header'>Location:</h4>
-                    <span class='location'>{{location}}</span>
+                    <span class='location'>{{#each location}} Latitude:{{latitude}} Longitude:{{longitude}}{{/each}}</span>
                   </li>
                   <li class="list-group-item">
                     <h4 class='inline-header'>Rating:</h4>
@@ -132,17 +99,17 @@
                   </li>
                   <li class="list-group-item">
                     <h4 class="inline-header">Comments:</h4>
-                    <span class='comments'>&ndash; {{#each comment}} ({{date}}) {{body}} &ndash;  {{/each}}</span>
+                    <span class='comments'>{{#each comments}} Date:{{date}} Body:{{body}} <br> {{/each}}</span>
                   </li>
                 </ul>
               </div>
             </div>
             <!-- end of album internal row -->
             <div class='panel-footer'>
-              <button class="btn btn-danger delete-album">Delete Restaurant</button>
-              <button class='btn btn-info edit-album'>Edit Restaurant</button>`
-              <button class='btn btn-primary add-song'>Add Comment</button>
-              <button class="btn btn-secondary edit-song">Edit Comment</button>
+              <button class="btn btn-danger delete-restaurant">Delete Restaurant</button>
+              <button class='btn btn-info edit-restaurant'>Edit Restaurant</button>`
+              <button class='btn btn-primary add-comment'>Add Comment</button>
+              <button class="btn btn-secondary edit-comment">Edit Comment</button>
             </div>
           </div>
         </div>

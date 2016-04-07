@@ -6,25 +6,25 @@ var restaurantList=[];
 var commentList=[];
 
 restaurantList.push({
-  name: Koo,
+  name: 'Koo',
   location: {longitude: 255,
               latitude: 255},
   rating: 9,
 });
 restaurantList.push({
-  name: Sushi_Ota,
+  name: 'Sushi_Ota',
   location: {longitude: 300,
               latitude: 89.5},
   rating: 8
 });
 restaurantList.push({
-  name: Sushi_Den,
+  name: 'Sushi_Den',
   location: {longitude: 200,
               latitude: 189},
   rating: 10,
 });
 restaurantList.push({
-  name: Fuki_Sushi,
+  name: 'Fuki_Sushi',
   location: {longitude: 29,
               latitude: 100},
   rating: 7,
@@ -101,7 +101,7 @@ var yelpdata ={ "businesses": [
 
 
 restaurantList.forEach(function(restaurant) {
-  restaurant.comments = comments;
+  restaurant.comments = commentList;
 });
 
 db.Restaurant.remove({}, function(err, restaurants){
