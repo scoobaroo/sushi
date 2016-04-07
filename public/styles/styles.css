@@ -1,0 +1,39 @@
+.jumbotron {
+  background-image: url(/images/sushiimg1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #EEE;
+}
+.jumbotron .container {
+  height: 350px;
+}
+
+.inline-header {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 12px;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: Helvetica;
+}
+
+.panel-footer {
+  background-color:black;
+}
+.panel-body{
+  background-color: black;
+  color: white;
+}
+
+.list-group-item{
+  background-color: black;
+  color:white
+}
+
+.modal-content {
+  background-color: black;
+  color: white;
+}

@@ -1,0 +1,23 @@
+{
+  "name": "sushi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "seed.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scoobaroo/sushi.git"
+  },
+  "keywords": [
+    "sushi"
+  ],
+  "author": "eric han",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scoobaroo/sushi/issues"
+  },
+  "homepage": "https://github.com/scoobaroo/sushi#readme"
+}
