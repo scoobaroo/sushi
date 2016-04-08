@@ -38,6 +38,15 @@ app.get('/api/restaurants', function(req,res){
     res.json(allRestaurants);
   });
 });
+app.get('/api/restaurants/:id/comments', function getComments(req,res){
+    var id = req.params.id;
+    db.Restaurant.findById(id, function(err, foundRestaurant) {
+      console.log(foundRestaurant);
+      var commentList = foundRestaurant.comments;
+      console.log(commentList); // dangerous, in a real app we'd validate the incoming data
+      res.json(commentList);  // responding with just the song, some APIs may respond with the parent object (Album in this case)
+    });
+});
 
 app.post('/api/restaurants', function(req,res){
   var name = req.body.name;
@@ -51,6 +60,38 @@ app.post('/api/restaurants', function(req,res){
                         comments: comments},
   function(err, restaurant){
     res.json(restaurant);
+  });
+});
+
+app.put('/api/restaurants/:id',function(req,res){
+  console.log(req.params);
+  console.log(req.body);
+  var id = req.params.id;
+  var Rname = req.params.name;
+  var Rlocation = req.params.location;
+  var Rrating = req.params.rating;
+  var Rcomments = req.params.comments;
+  db.Restaurant.findByIdAndUpdate(id, {name:Rname,
+    // {$set:
+    // {location.latitude:Rlocation, location.longitude=Rlocation},
+    // {comments.date=Rcomments, comments.body=Rcomments}
+                                                  // },
+                                        rating:Rrating},  {new: true}, function(err, datares){
+    if(err){
+      console.log(err);
+      res.status(500).json(err);
+      }
+    else
+      console.log(datares);
+      res.status(200).json(datares);
+    });
+});
+
+app.delete('/api/restaurants/:restaurantId', function(req,res){
+  var restaurantId = req.params.restaurantId;
+  console.log(restaurantId);
+  db.Restaurant.findByIdAndRemove(restaurantId, function(err,deletedRestaurant){
+    res.status(200).send('restaurant deleted!');
   });
 });
 /**********
