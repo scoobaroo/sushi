@@ -1,5 +1,8 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/sushi");
+
+mongoose.connect( process.env.MONGOLAB_URI ||
+                  process.env.MONGOHQ_URL ||
+                  'mongodb://localhost/sushi' );
 
 var Restaurant = require('./restaurant');
 
