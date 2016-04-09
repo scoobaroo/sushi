@@ -48,35 +48,80 @@ app.get('/api/restaurants/:id/comments', function getComments(req,res){
     });
 });
 
+app.post('/api/restaurants/:id/comments', function addComment(req,res){
+    var id = req.params.id;
+    console.log(req.body);
+    db.Restaurant.findById(id, function(err, foundRestaurant) {
+      foundRestaurant.comments.push(req.body); // dangerous, in a real app we'd validate the incoming data
+      foundRestaurant.save();
+      res.status(200).json(foundRestaurant);  // responding with just the song, some APIs may respond with the parent object (Album in this case)
+    });
+});
+
+app.put('/api/restaurants/:id/comments/:commentId', function deleteComment(req,res){
+    var id = req.params.id;
+    var commentId = req.params.commentId;
+    var commentBody=req.body.body;
+    var commentDate=req.body.date;
+    console.log(commentBody);
+    console.log(commentDate);
+    console.log(req.body);
+    db.Restaurant.findById(id, function(err, foundRestaurant) {
+      for(i=0;i<foundRestaurant.comments.length;i++){
+      if (foundRestaurant.comments[i]._id.toString()===commentId){
+        foundRestaurant.comments[i].date = commentDate;
+        foundRestaurant.comments[i].body = commentBody;
+        // console.log(foundRestaurant.comments[i]);
+        foundRestaurant.save();
+      }
+      }
+      // db.foundRestaurant.comments.findByIdAndRemove(commentId, removedComment);
+    });
+});
+app.delete('/api/restaurants/:id/comments/:commentId', function deleteComment(req,res){
+    var id = req.params.id;
+    var commentId = req.params.commentId;
+    db.Restaurant.findById(id, function(err, foundRestaurant) {
+      console.log(foundRestaurant);
+      for(i=0;i<foundRestaurant.comments.length;i++){
+      if (foundRestaurant.comments[i]._id.toString()===commentId){
+        foundRestaurant.comments[i].remove();
+        console.log(foundRestaurant.comments[i]);
+        foundRestaurant.save();
+      }
+      }
+      // db.foundRestaurant.comments.findByIdAndRemove(commentId, removedComment);
+    });
+});
+
 app.post('/api/restaurants', function(req,res){
   var name = req.body.name;
   var location = req.body.location;
   var rating = req.body.rating;
-  var comments = req.body.comments;
-  console.log(name,location,rating,comments);
-  db.Restaurant.create({name: name,
-                        location: location,
-                        rating: rating,
-                        comments: comments},
-  function(err, restaurant){
+  var body = req.body.comments.body;
+  var date = Date();
+  console.log(req.body);
+  var data={name: name,
+            location: [location],
+            rating: rating,
+            comments: [{date:date,body:body}]};
+  // console.log(data);
+  db.Restaurant.create(data, function(err, restaurant){
     res.json(restaurant);
   });
 });
 
 app.put('/api/restaurants/:id',function(req,res){
-  console.log(req.params);
   console.log(req.body);
   var id = req.params.id;
-  var Rname = req.params.name;
-  var Rlocation = req.params.location;
-  var Rrating = req.params.rating;
-  var Rcomments = req.params.comments;
-  db.Restaurant.findByIdAndUpdate(id, {name:Rname,
-    // {$set:
-    // {location.latitude:Rlocation, location.longitude=Rlocation},
-    // {comments.date=Rcomments, comments.body=Rcomments}
-                                                  // },
-                                        rating:Rrating},  {new: true}, function(err, datares){
+  var Rname = req.body.name;
+  var lat = req.body.location.latitude;
+  var long = req.body.location.longitude;
+  var Rrating = req.body.rating;
+  console.log(id, Rname, lat, long, Rrating);
+  db.Restaurant.findByIdAndUpdate(id,
+    { $set: {name:Rname, rating:Rrating, location: [{latitude:lat, longitude:long}],}},
+      {new: true}, function(err, datares){
     if(err){
       console.log(err);
       res.status(500).json(err);

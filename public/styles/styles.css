@@ -7,19 +7,16 @@
 .jumbotron .container {
   height: 350px;
 }
-
 .inline-header {
   display: inline-block;
   vertical-align: baseline;
   margin-right: 12px;
 }
-
 body {
   background-color: black;
   color: white;
   font-family: Helvetica;
 }
-
 .panel-footer {
   background-color:black;
 }
@@ -34,7 +31,6 @@ input {
   background-color: black;
   color:white
 }
-
 .modal-content {
   background-color: black;
   color: white;

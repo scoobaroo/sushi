@@ -6,7 +6,7 @@
 
     <title>Sushi Search SF</title>
     <!-- STYLESHEETS -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg&callback=initMap" async defer></script>
+
     <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -18,8 +18,21 @@
     <script src="scripts/app.js"></script>
   </head>
   <body>
-    <div id="map"></div>
-    <!-- <div class="jumbotron">
+    <div class='col-md-12' id="map">
+        <script>
+        var map;
+        function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+        });
+        }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg&callback=initMap"
+        async defer>
+        </script>
+      </div>
+    <div class="jumbotron">
       <div class="container">
         <h1>Welcome to Sushi Spot SF</h1>
         <p>Your guide to sushi in the City!</p>
@@ -50,7 +63,7 @@
           <input name="comments" type="text" placeholder="" id ='comments' class="form-control input-md">
           <br>
           <div class="form-group">
-            <label class="col-md-8 control-label" for="rating">Rating(Scale from 1-10)</label>
+            <label class="col-md- control-label" for="location">Rating(Scale from 1-10)</label>
             <div class="col-md-12">
             <input name="rating" type="text" placeholder="" id='rating' class="form-control input-md">
             </div>
@@ -97,7 +110,7 @@
               </div>
             </div>
             <!-- end of restaurant-name internal row -->
-            <!-- <div class='panel-footer'>
+            <div class='panel-footer'>
               <button class="btn btn-danger delete-restaurant">Delete Restaurant</button>
               <button class='btn btn-info edit-restaurant'>Edit Restaurant</button>
               <button class='btn btn-primary add-comment'>Add Comment</button>
@@ -108,7 +121,7 @@
       </div>
     </div>
     <!-- end one restaurant -->
-  <!-- </script>
+  </script>
   <div class="modal fade bs-modal-lg" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommendModalTitle">
     <div class="modal-dialog  modal-lg" role="document">
       <div class="modal-content">
@@ -124,11 +137,11 @@
               <input type="text" name="date" class="form-control comment-date" value="{{date}}">
             </div>
             <div class="form-group">
-              <input type="text" name="body" class="form-control comment-body" data-id="{{_id}}" value="{{body}}">
+              <input type="text" name="body" class="form-control comment-body" value="{{body}}">
             </div>
             <div class="form-group">
-              <button class="btn btn-primary save-changes" data-button-id="{{_id}}">Save Changes</button>
-              <button class="btn btn-danger delete-comment">x</button>
+              <button class="btn btn-primary save-changes" data-comment-id={{_id}}>Save Changes</button>
+              <button class="btn btn-danger delete-comment" data-comment-id="{{_id}}">x</button>
             </div>
           </form>
           {{/each}}
@@ -139,29 +152,5 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div><!-- /.modal-content -->
-    <!-- </div><!-- /.modal-dialog -->
-  <!-- </div>< -->
-<!-- </script>
-</script>
-<div class="modal fade bs-modal-lg" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="addCommendModalTitle">
-  <div class="modal-dialog  modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addCommentModalTitle">Add Comment</h4>
-      </div>
-      <div class="modal-body" id='addCommentModalBody'>
-          <label class='addCommentDate'>Comment Date</label>
-          <input class="commentDate" id="commentDate" val='' placeholder='Comment Date'>
-          <label class='addCommentBody'>Comment Body</label>
-          <input class="commentBody" id='commentBody' val='' placeholder='Comment Body'>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <div class="form-group">
-        <button class="btn btn-primary save-changes" data-button-id={{_id}}>Save Changes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
