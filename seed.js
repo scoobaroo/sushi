@@ -7,8 +7,8 @@ var commentList=[];
 
 restaurantList.push({
   name: 'Koo',
-  location: {longitude: 255,
-              latitude: 255},
+  location: {longitude: -119,
+              latitude: 50},
   rating: 9,
 });
 restaurantList.push({

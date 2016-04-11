@@ -143,6 +143,6 @@ app.delete('/api/restaurants/:restaurantId', function(req,res){
  * SERVER *
  **********/
 // listen on port 3000
-app.listen(process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.process.env.PORT || 3000, function () {
+app.listen(process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.PORT || 3000, function () {
   console.log('Express server is running on http://localhost:3000/');
 });

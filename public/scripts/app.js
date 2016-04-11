@@ -1,20 +1,47 @@
-var map;
-function initMap() {
- var myLatLng = {lat: 37.78, lng: -122.44};
- map = new google.maps.Map(document.getElementById("map"), {
-   center: myLatLng,
-   zoom: 2
- });
-}
-$(document).ready(function() {
-  var restaurantId;
-  console.log('app.js loaded!');
-  $.get('/api/restaurants').success(function (restaurants) {
-    restaurants.forEach(function(restaurant) {
-      renderRestaurant(restaurant);
-    });
-  });
+var restaurantId;
+var restaurantList;
 
+
+function initMap() {
+  $.ajax({
+    method:'GET',
+    url: '/api/restaurants',
+    success: getRestaurantSuccess,
+    error: getRestaurantError
+  });
+  var myLatLng = {lat: 37.78, lng: -122.44};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom:1,
+    center: myLatLng
+  });
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'Hello World!'
+  });
+  console.log(restaurantList.length);
+  for(i=0;i<restaurantList.length;i++){
+    console.log('rla',restaurantList[i].location[0].latitude);
+    var lat=restaurantList[i].location[0].latitude;
+    console.log('rlo',restaurantList[i].location[0].longitude);
+    var long=restaurantList[i].location[0].longitude;
+    new google.maps.Marker({
+      position: new google.maps.LatLng(lat,long),
+      map: map,
+      title: 'Hello Sushi!'
+    });
+  }
+}
+
+$(document).ready(function() {
+
+  console.log('app.js loaded!');
+  // $.ajax({
+  //   method:'GET',
+  //   url:'/api/restaurants',
+  //   success: getRestaurantSuccess,
+  //   error: getRestaurantError
+  // });
 
   $('#restaurant-form').on('submit', function(e) {
     e.preventDefault();
@@ -61,8 +88,10 @@ $(document).ready(function() {
           var commentId = $(this).closest('.comment-form').data('comment-id');
           console.log(commentId);
           var commentDate = Date();
-          console.log($(this).prev());
-          var commentBody= $(this).closest('.comment-body').val();
+          console.log($(this).context.form[1].value);
+          commentDate=$(this).context.form[0].value;
+          console.log($(this).context.form[0].value);
+          var commentBody= $(this).context.form[1].value;
           console.log(commentDate,commentBody);
           $.ajax({
             method: 'PUT',
@@ -132,26 +161,36 @@ $(document).ready(function() {
   });
   $("#restaurants").on('click', ".edit-restaurant", function(e){
     console.log('SANITY CHECK');
+    var Rid=$(this).context.offsetParent.parentElement.dataset.restaurantId;
+    console.log(Rid);
     e.preventDefault();
-    $('.edit-restaurant').html('<button class="btn btn-danger edit" id="saveChanges">Save Changes</button>');
-    $('.restaurant-name').html('<input type=text id="restaurant-name-edited"></form>');
-    $('.location').html('Longitude:<input type=text id="longitude" placeholder="longitude">Latitude:<input type=text id="latitude" placeholder="latitude">');
-    $('.rating').html('<input type=text id="rating-edited">');
-    $('#restaurants').on('click', '#saveChanges', function saveChanges(e){
-      e.preventDefault();
-      var restaurantId = $(this).closest('.restaurant').data('restaurant-id');
-      var editedRestaurantName = $('#restaurant-name-edited').val().toString();
-      var lat = $('#latitude').val();
-      var long = $('#longitude').val();
-      var editedRating = parseInt($('#rating-edited').val());
-      console.log(restaurantId,editedRestaurantName,lat,long,editedRating);
-      $.ajax({
-        method: 'PUT',
-        url: 'api/restaurants/'+restaurantId,
-        data: {name: editedRestaurantName, location: {latitude:lat,longitude:long}, rating: editedRating},
-        success: onEditSuccess,
-        error: onEditError
-      });
+    console.log($(this).parent().context);
+    console.log($('#'+Rid).parents().eq(0));
+    console.log($('#'+Rid).closest('.edit-restaurant'));
+    $($('#'+Rid).closest('.edit-restaurant').context.activeElement).html('<button class="btn btn-danger edit" id="saveChanges">Save Changes</button>');
+    $($('#'+Rid).parent()[0].parentElement.children[0]).html('Restaurant Name:<input type=text id="restaurant-name-edited"></form>');
+    $($('#'+Rid).parent()[0].parentElement.children[1]).html('Longitude:<input type=text id="longitude" placeholder="longitude">Latitude:<input type=text id="latitude" placeholder="latitude">');
+    $($('#'+Rid).parent()[0].parentElement.children[2]).html('Rating:<input type=text id="rating-edited">');
+  });
+
+  $('#restaurants').on('click', '#saveChanges', function saveChanges(e){
+    e.preventDefault();
+    var restaurantId = $(this).closest('.restaurant').data('restaurant-id');
+    var editedRestaurantName = $('#restaurant-name-edited').val();
+    var lat = parseInt($('#latitude').val());
+    var long = parseInt($('#longitude').val());
+    var editedRating = parseInt($('#rating-edited').val());
+    // var editedRestaurantName = $('#restaurant-name-edited').val().toString();
+    // var lat = parseInt($('#latitude').val());
+    // var long = parseInt($('#longitude').val());
+    // var editedRating = parseInt($('#rating-edited').val());
+    console.log(restaurantId,editedRestaurantName,lat,long,editedRating);
+    $.ajax({
+      method: 'PUT',
+      url: 'api/restaurants/'+restaurantId,
+      data: {name: editedRestaurantName, location: {latitude:lat,longitude:long}, rating: editedRating},
+      success: onEditSuccess,
+      error: onEditError
     });
   });
 });
@@ -210,8 +249,18 @@ function editCommentError(json){
 function addCommentSuccess(json){
   console.log(json);
   console.log('added comment!');
+  renderRestaurant(json);
 }
 function addCommentError(err){
   console.log(err);
   console.log('add comment error!');
+}
+function getRestaurantSuccess(restaurant){
+  restaurantList=restaurant;
+  restaurantList.forEach(function(restaurant) {
+    renderRestaurant(restaurant);
+  });
+}
+function getRestaurantError(json){
+  console.log(json);
 }
