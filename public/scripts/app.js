@@ -1,17 +1,11 @@
 var restaurantId;
 var restaurantList;
 
-
 function initMap() {
-  $.ajax({
-    method:'GET',
-    url: '/api/restaurants',
-    success: getRestaurantSuccess,
-    error: getRestaurantError
-  });
+
   var myLatLng = {lat: 37.78, lng: -122.44};
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom:1,
+    zoom:2,
     center: myLatLng
   });
   var marker = new google.maps.Marker({
@@ -19,18 +13,37 @@ function initMap() {
     map: map,
     title: 'Hello World!'
   });
-  console.log(restaurantList.length);
-  for(i=0;i<restaurantList.length;i++){
-    console.log('rla',restaurantList[i].location[0].latitude);
-    var lat=restaurantList[i].location[0].latitude;
-    console.log('rlo',restaurantList[i].location[0].longitude);
-    var long=restaurantList[i].location[0].longitude;
-    new google.maps.Marker({
-      position: new google.maps.LatLng(lat,long),
-      map: map,
-      title: 'Hello Sushi!'
+  $.ajax({
+    method:'GET',
+    url: '/api/restaurants',
+    success: getRestaurantSuccess,
+    error: getRestaurantError
+  });
+
+  function getRestaurantSuccess(restaurant){
+    restaurantList=restaurant;
+    restaurantList.forEach(function(object) {
+      renderRestaurant(object);
     });
+    console.log(restaurantList.length);
+    for(i=0;i<restaurantList.length;i++){
+      var lat=restaurantList[i].location[0].latitude;
+      console.log('rla',restaurantList[i].location[0].latitude);
+      var long=restaurantList[i].location[0].longitude;
+      console.log('rlo',restaurantList[i].location[0].longitude);
+      console.log('map', map);
+      new google.maps.Marker({
+        position: new google.maps.LatLng(lat,long),
+        map: map,
+        title: 'Hello Sushi!'
+      });
+      console.log('rendering position lat: '+lat+' and long '+long);
+    }
   }
+  function getRestaurantError(json){
+    console.log(json);
+  }
+
 }
 
 $(document).ready(function() {
@@ -254,13 +267,4 @@ function addCommentSuccess(json){
 function addCommentError(err){
   console.log(err);
   console.log('add comment error!');
-}
-function getRestaurantSuccess(restaurant){
-  restaurantList=restaurant;
-  restaurantList.forEach(function(restaurant) {
-    renderRestaurant(restaurant);
-  });
-}
-function getRestaurantError(json){
-  console.log(json);
 }

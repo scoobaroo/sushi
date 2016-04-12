@@ -24,49 +24,53 @@
         <p>Your guide to sushi in the City!</p>
       </div>
     </div>
-        <section id='restaurant-form' class="container col-md-6">
+      <div class='container'>
+        <section id='restaurant-form' class="col-md-12">
           <div class="row">
+            <div class='col-md-6' id='map'></div>
             <form class="form-horizontal">
               <fieldset>
-        <div class="form-group">
-          <label class="col-md-8 control-label" for="name">Restaurant Name</label>
-          <div class="col-md-8">
-          <input name="name" type="text" placeholder="" class="form-control input-md" id='restaurantname' required="">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-8">
-          <label class="col-md-8 control-label" for="location">Location:Longitude</label>
-          <input name="longitude" type="text" placeholder="" id='long' class="form-control input-md">
-          <label class="col-md-8 control-label" for="location">Location:Latitude</label>
-          <input name="latitude" type="text" placeholder="" id='lat' class="form-control input-md">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-8 control-label" for="comments">Comments</label>
-          <div class="col-md-8">
-          <input name="comments" type="text" placeholder="" id ='comments' class="form-control input-md">
-          <br>
-          <div class="form-group">
-            <label class="col-md-8 control-label" for="rating">Rating(Scale from 1-10)</label>
-            <div class="col-md-12">
-            <input name="rating" type="text" placeholder="" id='rating' class="form-control input-md">
-            </div>
-          </div>
-        </div>
-        </div>
-          <label class="control-label" for="singlebutton">Save Restaurant</label>
-          <div class="col-md-0">
-            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
+                <div class="form-group">
+                  <label class="control-label" for="name">Restaurant Name</label>
+                    <div class="col-md-8">
+                      <input name="name" type="text" placeholder="restaurant name" class="form-control input-md" id='restaurantname' required="">
+                    </div>
+                  </div>
+                <div class="form-group">
+                  <label class="control-label" for="long">Location:Longitude</label>
+                  <div class="col-md-8">
+                  <input name="longitude" type="text" placeholder="longitude" id='long' class="form-control input-md">
+                </div>
+              </div>
+                <div class='form-group'>
+                  <label class="control-label" for="lat">Location:Latitude</label>
+                  <div class="col-md-8">
+                  <input name="latitude" type="text" placeholder="latitude" id='lat' class="form-control input-md">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="rating">Rating(Scale from 1-10)</label>
+                <div class="col-md-8">
+                <input name="rating" type="text" placeholder="rating" id='rating' class="form-control input-md">
+                </div>
+              </div>
+                <div class="form-group">
+                  <label class="control-label" for="comments">Comments</label>
+                    <div class="col-md-8">
+                  <input name="comments" type="text" placeholder="comments" id ='comments' class="form-control input-md">
+              </div>
+              </div>
+              <label class="control-label" for="singlebutton">Save Restaurant</label>
+                <div class="col-md-2">
+                  <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
       </fieldset>
     </form>
-  </div>
+
   </div>
 </section>
-<div id = 'map'> </div>
-
+</div>
 <div id='restaurants'>
   <script id='restaurant-template' type='text/x-handlebars-template'>
     <div class="row restaurant" data-restaurant-id="{{_id}}">

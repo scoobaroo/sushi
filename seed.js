@@ -7,26 +7,26 @@ var commentList=[];
 
 restaurantList.push({
   name: 'Koo',
-  location: {longitude: -119,
-              latitude: 50},
+  location: {longitude: -115,
+              latitude: 40},
   rating: 9,
 });
 restaurantList.push({
   name: 'Sushi_Ota',
-  location: {longitude: 300,
-              latitude: 89.5},
+  location: {longitude: -108,
+              latitude: 45},
   rating: 8
 });
 restaurantList.push({
   name: 'Sushi_Den',
-  location: {longitude: 200,
-              latitude: 189},
+  location: {longitude: -100,
+              latitude: 65},
   rating: 10,
 });
 restaurantList.push({
   name: 'Fuki_Sushi',
-  location: {longitude: 29,
-              latitude: 100},
+  location: {longitude: -105 ,
+              latitude: 75},
   rating: 7,
 });
 
