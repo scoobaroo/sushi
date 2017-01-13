@@ -49,12 +49,8 @@ function initMap() {
 $(document).ready(function() {
 
   console.log('app.js loaded!');
-  // $.ajax({
-  //   method:'GET',
-  //   url:'/api/restaurants',
-  //   success: getRestaurantSuccess,
-  //   error: getRestaurantError
-  // });
+
+
 
   $('#restaurant-form').on('submit', function(e) {
     e.preventDefault();
@@ -193,10 +189,6 @@ $(document).ready(function() {
     var lat = parseInt($('#latitude').val());
     var long = parseInt($('#longitude').val());
     var editedRating = parseInt($('#rating-edited').val());
-    // var editedRestaurantName = $('#restaurant-name-edited').val().toString();
-    // var lat = parseInt($('#latitude').val());
-    // var long = parseInt($('#longitude').val());
-    // var editedRating = parseInt($('#rating-edited').val());
     console.log(restaurantId,editedRestaurantName,lat,long,editedRating);
     $.ajax({
       method: 'PUT',
